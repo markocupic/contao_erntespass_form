@@ -38,7 +38,6 @@ TemplateLoader::addFiles(array
 	'pdf_2'                    => 'system/modules/erntespass_form/templates',
 	'pdf_5'                    => 'system/modules/erntespass_form/templates',
 	'email_bestaetigung_admin' => 'system/modules/erntespass_form/templates',
-	'fe_warenkorb'             => 'system/modules/erntespass_form/templates',
 	'email_bestaetigung'       => 'system/modules/erntespass_form/templates',
 	'pdf_4'                    => 'system/modules/erntespass_form/templates',
 	'pdf_1'                    => 'system/modules/erntespass_form/templates',

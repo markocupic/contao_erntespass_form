@@ -2,6 +2,8 @@
 
 if(TL_MODE == 'FE'){
 
+    $GLOBALS['TL_CSS'][] = 'system/modules/erntespass_form/assets/fe_erntespass_form.css';
+
     // Do yout settings here:
     $GLOBALS['ERNTESPASS']['##GROSSER_GEMUESEGARTEN##'] = "Erntespass 80 (Gem&uuml;segarten gross ca. 85m&sup2;)";
     $GLOBALS['ERNTESPASS']['##KLEINER_GEMUESEGARTEN##'] = "Erntespass 40 (Gem&uuml;segarten klein ca. 45m&sup2;)";
@@ -14,6 +16,8 @@ if(TL_MODE == 'FE'){
 
     $GLOBALS['ERNTESPASS']['##ERNTESAISON##'] = "2016";
     $GLOBALS['ERNTESPASS']['##SCHUTZNETZ##'] = "Kulturschutznetz (5m x 2,30m) incl. 10 Netzhaltern";
+
+    MCupic\ErntespassForm::$debugMode = true;
 
     MCupic\ErntespassForm::$adminEmail = "info@needful-web.de";
     //MCupic\ErntespassForm::$adminEmail = "m.cupic@gmx.ch";

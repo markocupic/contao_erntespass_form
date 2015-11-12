@@ -11,6 +11,9 @@ namespace MCupic;
 
 class ErntespassForm
 {
+    // defug mode on/off
+    public static $debugMode = false;
+
     // e-mail-address
     public static $adminEmail;
 
@@ -43,7 +46,7 @@ class ErntespassForm
 
 
         // Get current page-alias
-        $pageId = \Frontend::getPageIdFromUrl();
+        $pageId = \FrontendIndex::getPageIdFromUrl();
 
         // Show page2 only if form1 was processed correctly
         if ($pageId == self::$pageAlias2) {
@@ -131,6 +134,11 @@ class ErntespassForm
             $email->text = utf8_encode($bodyAdmin . $body);
             $email->attachFile($filename);
             $email->attachFile($filenameAdmin);
+
+            if(self::$debugMode === true){
+                $email->sendBcc('m.cupic@gmx.ch');
+            }
+
             // Send email to Jeanette Lagall
             $email->sendTo(self::$adminEmail);
 

@@ -1,1 +1,0 @@
-<input type="hidden" name="<?php echo $this->name; ?>" value="<?php echo specialchars($_SESSION['FORM_DATA'][$this->name]); ?>">

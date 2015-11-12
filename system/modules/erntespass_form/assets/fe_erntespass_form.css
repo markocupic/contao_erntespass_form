@@ -1,0 +1,5 @@
+/* Hide session input fields */
+form .display-none
+{
+    display:none;
+}
