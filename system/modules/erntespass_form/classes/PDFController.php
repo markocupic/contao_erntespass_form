@@ -108,10 +108,10 @@ class PDFController extends \System
 
         // set document information
         $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Marko Cupic');
-        $pdf->SetTitle('Bestellbestätigung');
-        $pdf->SetSubject('Bestellbestätigung');
-        $pdf->SetKeywords('Bestellbestätigung');
+        $pdf->SetAuthor('Jeanette Lagall - Erntespass - Brahmsstr. 3 - 56179 Vallendar');
+        $pdf->SetTitle('Bestellbestätigung Erntespass (Jeanette Lagall)');
+        $pdf->SetSubject('Ihre Bestellbestätigung (http:/erntespass.de)');
+        $pdf->SetKeywords('Bestellbestätigung Erntespass Jeanette Lagall Vallendar');
 
         // set default header data
         //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 006', PDF_HEADER_STRING);

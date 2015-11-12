@@ -26,7 +26,7 @@ if(TL_MODE == 'FE'){
     MCupic\ErntespassForm::$pageAlias2 = "garten-buchen-zusammenfassung";
     MCupic\ErntespassForm::$pageAlias3 = "garten-buchen-bestaetigung";
 
-    MCupic\ErntespassForm::$rechnungsVerzeichnis = 'files/rechnungen';
+    MCupic\ErntespassForm::$rechnungsVerzeichnis = 'files/erntespass/rechnungen';
     MCupic\ErntespassForm::$agb = 'files/erntespass/pdf/AGB_Erntespass.pdf';
     MCupic\ErntespassForm::$widerrufsbelehrung = 'files/erntespass/pdf/Widerrufsbelehrung_Erntespass.pdf';
     /** End settings */
