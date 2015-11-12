@@ -1,0 +1,39 @@
+<table>
+    <tr>
+        <td style="width:110mm;">
+        <h1 style="color:#a3c218 ;">Rechnung</h1>
+        <br>
+    </td>
+        <td style="width:60mm;">
+        </td>
+    </tr>
+    <tr>
+        <td style="width:110mm">
+            <p>
+Erntespaﬂ<br>
+Jeanette Lagall<br>
+Brahmstr. 3<br>
+56179 Vallandar<br>
+Telefon: 0261 / 2873 3257<br>
+E-Mail: info@erntespass.de
+            </p>
+        </td>
+        <td style="width:60mm">
+Datum: ##DATE##<br>
+Rechnungsnummer: ##RECHNUNGSNUMMER##
+        </td>
+    </tr>
+    <tr>
+        <td style="width:110mm" colspan="2">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+<span style="font-weight: bold;">Rechnung an:</span><br>
+##KUNDENVORNAME## ##KUNDENNAME##<br>
+##KUNDENSTRASSE##<br>
+##KUNDENPLZ## ##KUNDENORT##
+        </td>
+    </tr>
+</table>

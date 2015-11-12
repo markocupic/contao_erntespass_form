@@ -1,0 +1,77 @@
+<br>
+<br>
+<br>
+<table style="border-spacing:0 5px;">
+    <tr>
+        <td style="width:85mm; border-bottom: 1px solid #000000; font-weight:bold; color:#a3c218 ;">
+Produkt
+        </td>
+        <td style="width:30mm;text-align:right; border-bottom: 1px solid #000000; font-weight:bold; color:#a3c218 ;">
+Preis (EUR)
+        </td>
+        <td style="width:20mm;  text-align:right; border-bottom: 1px solid #000000; font-weight:bold; color:#a3c218 ;">
+            Anzahl
+        </td>
+        <td style="width:35mm;  text-align:right; border-bottom: 1px solid #000000; font-weight:bold; color:#a3c218 ;">
+Betrag
+        </td>
+    </tr>
+    <tr>
+        <td style="width:85mm">
+##PRODUKT## f&uuml;r die Saison ##ERNTESAISON## in ##ORT## ##TEXT-GESCHENK-FUER##
+        </td>
+        <td style="width:30mm; text-align:right;">
+##PREISPRODUKT-NETTO## &euro;
+        </td>
+        <td style="width:20mm; text-align:right;">
+1
+        </td>
+        <td style="width:35mm; text-align:right;">
+##PREISPRODUKT-NETTO## &euro;
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width:85mm">
+##SCHUTZNETZ##
+        </td>
+        <td style="width:30mm; text-align:right;">
+##SCHUTZNETZ-PREIS-EINZEL## &euro;
+        </td>
+        <td style="width:20mm; text-align:right;">
+##SCHUTZNETZ-ANZAHL##
+        </td>
+        <td style="width:35mm; text-align:right;">
+##SCHUTZNETZ-PREIS-GESAMT## &euro;
+        </td>
+    </tr>
+
+    <tr>
+        <td style="width:85mm">
+        </td>
+        <td style="width:30mm; text-align:right; border-top: 1px solid #000000;">
+Nettobetrag<br>
+MwSt.-Satz<br>
+MwSt.-Betrag
+        </td>
+        <td style="width:20mm; text-align:right; border-top: 1px solid #000000;">
+        </td>
+        <td style="width:35mm; text-align:right; border-top: 1px solid #000000;">
+##NETTOBETRAG## &euro;<br>
+##MWSTSATZ##%<br>
+##MWSTBETRAG## &euro;
+        </td>
+    </tr>
+    <tr>
+        <td style="width:85mm">
+        </td>
+        <td style="width:30mm; text-align:right; border-top: 2px solid #000000;">
+<span style="font-weight:bold">Gesamtbetrag</span>
+        </td>
+        <td style="width:20mm; text-align:right; border-top: 2px solid #000000;">
+        </td>
+        <td style="width:35mm; text-align:right; border-top: 2px solid #000000;">
+<span style="font-weight:bold">##GESAMTBETRAG## &euro;</span>
+        </td>
+    </tr>
+</table>

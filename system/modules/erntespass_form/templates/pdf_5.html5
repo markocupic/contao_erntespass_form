@@ -1,0 +1,8 @@
+    <tr>
+        <td style="width:80mm; border-top: 1px solid #000000; font-weight:bold;">
+##KEY##
+        </td>
+        <td style="width:90mm;text-align:left; border-top: 1px solid #000000; color:#000000;">
+##VALUE##
+        </td>
+    </tr>

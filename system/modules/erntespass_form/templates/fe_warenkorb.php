@@ -1,0 +1,108 @@
+<?php
+$arrFields = array(
+    "anrede","vorname", "nachname", "strasse", "postleitzahl", "ort", "telefon", "email",
+    "anfang_geschenkadresse", "anrede_geschenkadresse", "vorname_geschenkadresse", "nachname_geschenkadresse", "strasse_geschenkadresse", "postleitzahl_geschenkadresse", "ort_geschenkadresse", "telefon_geschenkadresse", "e-mail_geschenkadresse", "datum_kontakt_erlaubt_geschenkadresse",
+    "anmerkung", "zahlungsart",
+    //"gartengroesse", "gartenname",
+    //"anzahl_schutznetze",
+    //"agb", "widerrufsbelehrung"
+);
+
+$mwstSatz = $GLOBALS['ERNTESPASS']['##MWSTSATZ##'];
+
+// Garten
+$gartenBeschrieb = $_SESSION['FORM_DATA']['gartengroesse'] == 'klein' ? $GLOBALS['ERNTESPASS']['##KLEINER_GEMUESEGARTEN##'] : $GLOBALS['ERNTESPASS']['##GROSSER_GEMUESEGARTEN##'];
+$gartenPreis = $_SESSION['FORM_DATA']['gartengroesse'] == 'klein' ? $GLOBALS['ERNTESPASS']['##PREIS_KLEINER_GEMUESEGARTEN##']  : $GLOBALS['ERNTESPASS']['##PREIS_GROSSER_GEMUESEGARTEN##'];
+$gartenPreis = $gartenPreis/(100+$mwstSatz)*100;
+$gartenBeschrieb = $_SESSION['FORM_DATA']['gartengroesse'] == 'klein' ? $GLOBALS['ERNTESPASS']['##KLEINER_GEMUESEGARTEN##'] : $GLOBALS['ERNTESPASS']['##GROSSER_GEMUESEGARTEN##'];
+
+// Schutznetze
+$anzSchutznetze = $_SESSION['FORM_DATA']['anzahl_schutznetze'];
+$NettoPreisSchutznetz = $GLOBALS['ERNTESPASS']['##PREIS_SCHUTZNETZ##']/(100 + $mwstSatz)*100;
+$NettoPreisAlleSchutznetze = $GLOBALS['ERNTESPASS']['##PREIS_SCHUTZNETZ##']/(100 + $mwstSatz)*100*$anzSchutznetze;
+
+$Nettobetrag = ($NettoPreisAlleSchutznetze + $gartenPreis);
+$mwstBetrag = $Nettobetrag*$mwstSatz/100;
+$Gesamtbetrag = $Nettobetrag/100*(100+$mwstSatz);
+
+function floatRound($value){
+    return number_format(floatval(round($value, 2)),2);
+}
+
+?>
+
+
+<div class="erntespass-zusammenfassung">
+
+    <h1>Ihre Adressangaben</h1>
+    <table class="warenkorb-table-contact">
+        <?php foreach($arrFields as $k): ?>
+        <?php if(strpos($k, 'geschenkadresse') !== false && $_SESSION['FORM_DATA']['anfang_geschenkadresse'] == '')continue; ?>
+        <?php $label = $_SESSION['MY_FORM_DATA']['arrLabels'][$k]; ?>
+        <?php $v = $_SESSION['FORM_DATA'][$k]; ?>
+        <?php if($k == 'anfang_geschenkadresse') {$v = 'Ja'; $label = 'Der Garten ist ein Geschenk:';}?>
+        <?php if ($v == '') $v = 'Keine Angabe'; ?>
+        <tr class="warenkorb-table-contact-row row-<?php echo $k; ?>">
+            <td class="col_1"><?php echo $label; ?></td>
+            <td class="col_2"><?php echo nl2br($v); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
+
+    <h1>Ihr Warenkorb</h1>
+    <table class="warenkorb-table-items">
+        <tr class="warenkorb-table-items-row-head">
+            <th class="col_1">Produkt</th>
+            <th class="col_2">Preis</th>
+            <th class="col_3">Anzahl</th>
+            <th class="col_4">Betrag</th>
+        </tr>
+
+        <tr class="warenkorb-table-items-row-garten">
+            <td class="col_1"><?php echo $gartenBeschrieb; ?></td>
+            <td class="col_2"><?php echo floatRound($gartenPreis); ?> &euro;</td>
+            <td class="col_3">1</td>
+            <td class="col_4"><?php echo floatRound($gartenPreis); ?> &euro;</td>
+        </tr>
+
+        <tr class="warenkorb-table-items-row-schutznetz">
+            <td class="col_1">Kulturschutznetz (5m x 2,30m) incl. 10 Netzhaltern</td>
+            <td class="col_2"><?php echo floatRound($NettoPreisSchutznetz); ?> &euro;</td>
+            <td class="col_3"><?php echo $anzSchutznetze; ?></td>
+            <td class="col_4"><?php echo floatRound($NettoPreisAlleSchutznetze); ?> &euro;</td>
+        </tr>
+
+        <tr class="warenkorb-table-items-row-nettobetrag">
+            <td class="col_1">&nbsp;</td>
+            <td class="col_2">Nettobetrag</td>
+            <td class="col_3">&nbsp;</td>
+            <td class="col_4"><?php echo floatRound($Nettobetrag); ?> &euro;</td>
+        </tr>
+
+        <tr class="warenkorb-table-items-row-mwst-satz">
+            <td class="col_1">&nbsp;</td>
+            <td class="col_2">MwSt.-Satz</td>
+            <td class="col_3">&nbsp;</td>
+            <td class="col_4"><?php echo $mwstSatz; ?>%</td>
+        </tr>
+
+        <tr class="warenkorb-table-items-row-mwst-betrag">
+            <td class="col_1">&nbsp;</td>
+            <td class="col_2">MwSt.-Betrag</td>
+            <td class="col_3">&nbsp;</td>
+            <td class="col_4"><?php echo floatRound($mwstBetrag); ?> &euro;</td>
+        </tr>
+
+        <tr class="warenkorb-table-items-row-mwst-gesamtbetrag">
+            <td class="col_1">&nbsp;</td>
+            <td class="col_2">Gesamtbetrag</td>
+            <td class="col_3">&nbsp;</td>
+            <td class="col_4"><?php echo floatRound($Gesamtbetrag); ?> &euro;</td>
+        </tr>
+
+    </table>
+
+    <a href="index.php/garten-buchen-bestellformular.html">Bestellung bearbeiten</a>
+</div>
+
