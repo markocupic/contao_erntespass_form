@@ -11,8 +11,6 @@ namespace MCupic;
 
 class ErntespassForm
 {
-    // defug mode on/off
-    public static $debugMode = false;
 
     // e-mail-address
     public static $adminEmail;
@@ -36,7 +34,7 @@ class ErntespassForm
     public static $widerrufsbelehrung;
 
     /**
-     * Die letze Bestätigungsseite kann nur aufgerufen werden, wenn alle Formulare vorher richtig durchlaufen wurden
+     * Die letze BestÃ¤tigungsseite kann nur aufgerufen werden, wenn alle Formulare vorher richtig durchlaufen wurden
      */
     public function initializeSystem()
     {
@@ -79,9 +77,7 @@ class ErntespassForm
     public function processFormData($arrSubmitted, $arrData, $arrFiles, $arrLabels, $self)
     {
 
-        $_SESSION['MY_FORM_DATA']['arrLabels'] = $arrLabels;
-
-        // Formular 1 ist korrekt ausgefüllt, und es darf zu Formular 2 gesprungen werden
+        // Formular 1 ist korrekt ausgefÃ¼llt, und es darf zu Formular 2 gesprungen werden
         if (self::$currentPageAlias == self::$pageAlias1) {
             $_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] = 'true';
         }
@@ -125,6 +121,7 @@ class ErntespassForm
             $email->attachFile(self::$agb);
             $email->attachFile(self::$widerrufsbelehrung);
             $email->sendTo($_SESSION['FORM_DATA']['email']);
+            sleep(2);
 
             // Send email to administrator
             $email = new \Email();
@@ -135,9 +132,6 @@ class ErntespassForm
             $email->attachFile($filename);
             $email->attachFile($filenameAdmin);
 
-            if(self::$debugMode === true){
-                $email->sendBcc('m.cupic@gmx.ch');
-            }
 
             // Send email to Jeanette Lagall
             $email->sendTo(self::$adminEmail);
@@ -178,11 +172,35 @@ class ErntespassForm
      */
     public function loadFormField($objWidget, $formId, $arrForm)
     {
-        if (self::$currentPageAlias == self::$pageAlias2) {
+        if (self::$currentPageAlias == self::$pageAlias1) {
 
-            if($_SESSION['FORM_DATA']['anfang_geschenkadresse'] == '')
-            {
-                if(strpos($objWidget->name, '_geschenkadresse') !== false){
+            // Load labels that are predefined in config.php
+            if ($_SESSION['MY_FORM_DATA']['arrLabelReady'] != 'true') {
+                foreach ($GLOBALS['ERNTESPASS']['labels'] as $k => $v) {
+                    $_SESSION['MY_FORM_DATA']['arrLabelReady'] = 'true';
+                    $_SESSION['MY_FORM_DATA']['arrLabels'][$k] = $v;
+                }
+            }
+
+            // Fill Label Array if it isn't already predefined
+            if ($_SESSION['MY_FORM_DATA']['arrLabels'][$objWidget->name] == '') {
+                $_SESSION['MY_FORM_DATA']['arrLabels'][$objWidget->name] = $objWidget->label;
+            }
+
+            // Set Correct Label for option fields
+            if (is_array($objWidget->options)) {
+                foreach ($objWidget->options as $arrOption) {
+                    if ($arrOption['label'] != '') {
+                        $_SESSION['MY_FORM_DATA']['arrLabels'][$arrOption['value']] = $arrOption['label'];
+                    }
+                }
+            }
+
+        }
+
+        if (self::$currentPageAlias == self::$pageAlias2) {
+            if ($_SESSION['FORM_DATA']['anfang_geschenkadresse'] == '') {
+                if (strpos($objWidget->name, '_geschenkadresse') !== false) {
                     $objWidget->mandatory = false;
                     $objWidget->rgxp = '';
                     $objWidget->value = '';
@@ -201,7 +219,7 @@ class ErntespassForm
     public function compileFormFields($arrFields, $formId, $self)
     {
 
-        // Direktes Aufrufen von formular 2, wenn formular 1 nicht erfolgreich validiert wurde, sollte nicht möglich sein.
+        // Direktes Aufrufen von formular 2, wenn formular 1 nicht erfolgreich validiert wurde, sollte nicht mï¿½glich sein.
         if ($formId == 'auto_garten-buchen-zusammenfassung') {
             if ($_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] != 'true') {
                 self::redirectToPage(self::$pageAlias1);
@@ -234,7 +252,7 @@ class ErntespassForm
 
 
     /**
-     * Ändert die Seite auf die weitergeleitet werden soll, wenn das Formular verarbeitet wurde.
+     * ï¿½ndert die Seite auf die weitergeleitet werden soll, wenn das Formular verarbeitet wurde.
      * @param $strAlias
      * @param $objForm
      */

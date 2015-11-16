@@ -70,6 +70,7 @@ class PDFController extends \System
             "ort",
             "telefon",
             "email",
+            "standort",
             "anfang_geschenkadresse",
             "anrede_geschenkadresse",
             "vorname_geschenkadresse",
@@ -104,6 +105,7 @@ class PDFController extends \System
 
 
         // create new PDF document
+        // Extend TCPDF for special footer and header handling
         $pdf = new \MYTCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
@@ -145,10 +147,6 @@ class PDFController extends \System
         // add a page
         $pdf->AddPage();
 
-
-        $pdf->Image(TL_ROOT . '/system/modules/erntespass_form/assets/logo.jpg', 125, 13, 60, 25, 'JPG',
-            'http://erntespass.de', '', true, 150, '', false, false, 0, false, false, false);
-
         // create some HTML content
         $objFile = new \File('system/modules/erntespass_form/templates/pdf_1.html5');
         $html = $objFile->getContent();
@@ -173,10 +171,6 @@ class PDFController extends \System
             // add a page
             $pdf->AddPage();
 
-
-            $pdf->Image(TL_ROOT . '/system/modules/erntespass_form/assets/logo.jpg', 125, 13, 60, 25, 'JPG',
-                'http://erntespass.de', '', true, 150, '', false, false, 0, false, false, false);
-
             $html = '<h1>Alle Daten auf einen Blick</h1>';
             $html .= '<table>';
             $objFile = new \File('system/modules/erntespass_form/templates/pdf_5.html5');
@@ -191,29 +185,28 @@ class PDFController extends \System
                     }else{
                         if($k == 'anfang_geschenkadresse')
                         {
-                            $label = 'Der Garten ist ein Geschenk:';
                             $v = 'Ja';
                         }
                     }
                 }
+
                 if($k == 'widerrufsbelehrung' && $v != ''){
-                    $label = 'Widerrufsbelehrung:';
                     $v = 'Widerrufsbelehrung wurde vom Kunden eingesehen.';
                 }
-                if($k == 'gartengroesse' && $v != ''){
-                    $label = 'Gartengrösse:';
-                }
-
 
                 if($k == 'agb' && $v != ''){
-                    $label = 'AGB:';
                     $v = "Die AGB's wurden vom Kunden akzeptiert.";
+                }
+
+                // Set correct value for option fields
+                if($_SESSION['MY_FORM_DATA']['arrLabels'][$v] != ''){
+                    $v = $_SESSION['MY_FORM_DATA']['arrLabels'][$v];
                 }
 
                 $strRow = str_replace('##KEY##', htmlentities(html_entity_decode($label)), $htmlRow);
 
                 $v = $v == '' ? '----' : $v;
-                $strRow = str_replace('##VALUE##', $v, $strRow);
+                $strRow = str_replace('##VALUE##', htmlentities(html_entity_decode($v)), $strRow);
                 $html .= $strRow;
             }
             $pdf->writeHTML(utf8_encode($html), true, false, true, false, '');
@@ -282,6 +275,10 @@ class PDFController extends \System
         $string = str_replace('##DATE##', \Date::parse('d.m.Y'), $string);
         $string = str_replace('##RECHNUNGSNUMMER##', $this->rechnungsnummer, $string);
         $string = str_replace('##ORT##', $this->arrFields['ort'], $string);
+        $string = str_replace('##GARTENNAME##', $this->arrFields['gartenname'], $string);
+
+        // Special handling for option-fields
+        $string = str_replace('##STANDORT##', utf8_encode(htmlentities($_SESSION['MY_FORM_DATA']['arrLabels'][$this->arrFields['standort']])), $string);
 
 
         $string = str_replace('##KUNDENVORNAME##', $this->arrFields['vorname'], $string);

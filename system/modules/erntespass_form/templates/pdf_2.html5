@@ -18,7 +18,10 @@ Betrag
     </tr>
     <tr>
         <td style="width:85mm">
-##PRODUKT## f&uuml;r die Saison ##ERNTESAISON## in ##ORT## ##TEXT-GESCHENK-FUER##
+##PRODUKT## f&uuml;r die Saison ##ERNTESAISON## in ##ORT##<br>
+Standort: "##STANDORT##"<br>
+Gartenname: "##GARTENNAME##"
+##TEXT-GESCHENK-FUER##
         </td>
         <td style="width:30mm; text-align:right;">
 ##PREISPRODUKT-NETTO## &euro;

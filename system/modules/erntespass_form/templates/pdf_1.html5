@@ -10,7 +10,7 @@
     <tr>
         <td style="width:110mm">
             <p>
-Erntespaﬂ<br>
+Erntespa&szlig;<br>
 Jeanette Lagall<br>
 Brahmstr. 3<br>
 56179 Vallendar<br>
@@ -25,11 +25,9 @@ Rechnungsnummer: ##RECHNUNGSNUMMER##
     </tr>
     <tr>
         <td style="width:110mm" colspan="2">
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+<br>
+<br>
+<br>
 <span style="font-weight: bold;">Rechnung an:</span><br>
 ##KUNDENVORNAME## ##KUNDENNAME##<br>
 ##KUNDENSTRASSE##<br>

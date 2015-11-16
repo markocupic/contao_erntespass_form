@@ -10,17 +10,15 @@ class MYTCPDF extends \TCPDF
 {
 
     //Page header
-    /**
+
     public function Header()
     {
         // Logo
-        $image_file = K_PATH_IMAGES . 'logo_example.jpg';
-        $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        // Set font
-        $this->SetFont('helvetica', 'B', 20);
-        // Title
-        $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    }**/
+        $image_file = TL_ROOT . '/system/modules/erntespass_form/assets/logo.jpg';
+        //$image_file = TL_ROOT . '/system/modules/erntespass_form/assets/logo.ai';
+        //$this->ImageEps($image_file, 125, 13, 60, '', 'http://erntespass.de', true, '', '', 0, false);
+        $this->Image($image_file, 125, 13, 60, '', 'JPG','http://erntespass.de', '', true, 150, '', false, false, 0, false, false, false);
+    }
 
     // Page footer
     public function Footer()
