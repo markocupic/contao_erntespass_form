@@ -14,10 +14,8 @@ class MYTCPDF extends \TCPDF
     public function Header()
     {
         // Logo
-        $image_file = TL_ROOT . '/system/modules/erntespass_form/assets/logo.jpg';
-        //$image_file = TL_ROOT . '/system/modules/erntespass_form/assets/logo.ai';
-        //$this->ImageEps($image_file, 125, 13, 60, '', 'http://erntespass.de', true, '', '', 0, false);
-        $this->Image($image_file, 125, 13, 60, '', 'JPG','http://erntespass.de', '', true, 150, '', false, false, 0, false, false, false);
+        $image_file = TL_ROOT . '/system/modules/erntespass_form/assets/logo.png';
+        $this->Image($image_file, 125, 13, 60, '', '', 'http://erntespass.de', '', false, 300);
     }
 
     // Page footer

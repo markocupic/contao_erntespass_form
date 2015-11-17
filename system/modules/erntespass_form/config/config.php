@@ -28,7 +28,7 @@ if(TL_MODE == 'FE'){
     $GLOBALS['ERNTESPASS']['##SCHUTZNETZ##'] = "Kulturschutznetz (5m x 2,30m) incl. 10 Netzhaltern";
 
     MCupic\ErntespassForm::$adminEmail = "info@needful-web.de";
-    //MCupic\ErntespassForm::$adminEmail = "marko.cupic@ettiswil.educanet2.ch";
+    //MCupic\ErntespassForm::$adminEmail = "m.cupic@gmx.ch";
     //MCupic\ErntespassForm::$adminEmail = "info@erntespass.de";
 
     MCupic\ErntespassForm::$pageAlias1 = "garten-buchen-bestellformular";
