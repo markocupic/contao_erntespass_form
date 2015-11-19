@@ -33,14 +33,14 @@ function floatRound($value){
 
 
 <div class="erntespass-zusammenfassung">
-<?php //die(print_r($_SESSION['MY_FORM_DATA']['arrLabels'],true)); ?>
+<?php //die(print_r($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'],true)); ?>
     <h1>Ihre Adressangaben</h1>
     <table class="warenkorb-table-contact">
         <?php foreach($arrFields as $k): ?>
         <?php if(strpos($k, 'geschenkadresse') !== false && $_SESSION['FORM_DATA']['anfang_geschenkadresse'] == '')continue; ?>
-        <?php $label = $_SESSION['MY_FORM_DATA']['arrLabels'][$k]; ?>
+        <?php $label = $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$k]; ?>
         <?php $v = $_SESSION['FORM_DATA'][$k]; ?>
-        <?php if($_SESSION['MY_FORM_DATA']['arrLabels'][$v] != ''){$v = $_SESSION['MY_FORM_DATA']['arrLabels'][$v];} ?>
+        <?php if($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$v] != ''){$v = $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$v];} ?>
         <?php if($k == 'anfang_geschenkadresse') {$v = 'Ja'; $label = 'Der Garten ist ein Geschenk:';}?>
         <?php if ($v == '') $v = 'Keine Angabe'; ?>
         <tr class="warenkorb-table-contact-row row-<?php echo $k; ?>">

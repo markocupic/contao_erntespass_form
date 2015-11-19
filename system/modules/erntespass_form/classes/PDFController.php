@@ -177,7 +177,7 @@ class PDFController extends \System
             $htmlRow = $objFile->getContent();
 
             foreach ($this->arrFields as $k => $v) {
-                $label = $_SESSION['MY_FORM_DATA']['arrLabels'][$k] != '' ? $_SESSION['MY_FORM_DATA']['arrLabels'][$k] : $k;
+                $label = $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$k] != '' ? $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$k] : $k;
                 if(strpos($k, '_geschenkadresse') !== false){
                     if($this->arrFields['anfang_geschenkadresse'] == '')
                     {
@@ -199,8 +199,8 @@ class PDFController extends \System
                 }
 
                 // Set correct value for option fields
-                if($_SESSION['MY_FORM_DATA']['arrLabels'][$v] != ''){
-                    $v = $_SESSION['MY_FORM_DATA']['arrLabels'][$v];
+                if($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$v] != ''){
+                    $v = $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$v];
                 }
 
                 $strRow = str_replace('##KEY##', htmlentities(html_entity_decode($label)), $htmlRow);
@@ -278,7 +278,7 @@ class PDFController extends \System
         $string = str_replace('##GARTENNAME##', $this->arrFields['gartenname'], $string);
 
         // Special handling for option-fields
-        $string = str_replace('##STANDORT##', utf8_encode(htmlentities($_SESSION['MY_FORM_DATA']['arrLabels'][$this->arrFields['standort']])), $string);
+        $string = str_replace('##STANDORT##', utf8_encode(htmlentities($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$this->arrFields['standort']])), $string);
 
 
         $string = str_replace('##KUNDENVORNAME##', $this->arrFields['vorname'], $string);

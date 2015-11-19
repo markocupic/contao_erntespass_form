@@ -46,9 +46,23 @@ class ErntespassForm
         // Get current page-alias
         $pageId = \FrontendIndex::getPageIdFromUrl();
 
+        // Session Form Daten aus $_SESSION['ERNTESPASS_FORM_DATA'] laden,
+        // um Kollisionen mit anderen Formularen zu umgehen,
+        // die die Erweiterung sessionform ebenfalls nutzen
+        if ($pageId == self::$pageAlias1) {
+            if (!isset($_POST['FORM_SUBMIT'])) {
+                if(is_array($_SESSION['ERNTESPASS_FORM_DATA']['arrData']))
+                {
+                    foreach ($_SESSION['ERNTESPASS_FORM_DATA']['arrData'] as $k => $v) {
+                        $_SESSION['FORM_DATA'][$k] = $v;
+                    }
+                }
+            }
+        }
+
         // Show page2 only if form1 was processed correctly
         if ($pageId == self::$pageAlias2) {
-            if ($_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] != 'true') {
+            if ($_SESSION['ERNTESPASS_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] != 'true') {
                 self::redirectToPage(self::$pageAlias1);
             }
         }
@@ -56,12 +70,12 @@ class ErntespassForm
         // Show page3 only if form2 was processed correctly
         self::$currentPageAlias = $pageId;
         if ($pageId == self::$pageAlias3) {
-            if ($_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-ZUSAMMENFASSUNG'] != 'true') {
+            if ($_SESSION['ERNTESPASS_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-ZUSAMMENFASSUNG'] != 'true') {
                 self::redirectToPage(self::$pageAlias1);
             } else {
                 // Mehrfachversand unterbinden
                 unset($_SESSION['FORM_DATA']);
-                unset($_SESSION['MY_FORM_DATA']);
+                unset($_SESSION['ERNTESPASS_FORM_DATA']);
             }
         }
 
@@ -79,7 +93,13 @@ class ErntespassForm
 
         // Formular 1 ist korrekt ausgefüllt, und es darf zu Formular 2 gesprungen werden
         if (self::$currentPageAlias == self::$pageAlias1) {
-            $_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] = 'true';
+            $_SESSION['ERNTESPASS_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] = 'true';
+        }
+
+        // PDF generieren
+        // email senden
+        if (self::$currentPageAlias == self::$pageAlias1) {
+            $_SESSION['ERNTESPASS_FORM_DATA']['arrData'] = $arrSubmitted;
         }
 
         // PDF generieren
@@ -137,8 +157,8 @@ class ErntespassForm
             $email->sendTo(self::$adminEmail);
 
             // Clear session
-            unset($_SESSION['MY_FORM_DATA']);
-            $_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-ZUSAMMENFASSUNG'] = 'true';
+            unset($_SESSION['ERNTESPASS_FORM_DATA']);
+            $_SESSION['ERNTESPASS_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-ZUSAMMENFASSUNG'] = 'true';
         }
     }
 
@@ -175,23 +195,23 @@ class ErntespassForm
         if (self::$currentPageAlias == self::$pageAlias1) {
 
             // Load labels that are predefined in config.php
-            if ($_SESSION['MY_FORM_DATA']['arrLabelReady'] != 'true') {
+            if ($_SESSION['ERNTESPASS_FORM_DATA']['arrLabelReady'] != 'true') {
                 foreach ($GLOBALS['ERNTESPASS']['labels'] as $k => $v) {
-                    $_SESSION['MY_FORM_DATA']['arrLabelReady'] = 'true';
-                    $_SESSION['MY_FORM_DATA']['arrLabels'][$k] = $v;
+                    $_SESSION['ERNTESPASS_FORM_DATA']['arrLabelReady'] = 'true';
+                    $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$k] = $v;
                 }
             }
 
             // Fill Label Array if it isn't already predefined
-            if ($_SESSION['MY_FORM_DATA']['arrLabels'][$objWidget->name] == '') {
-                $_SESSION['MY_FORM_DATA']['arrLabels'][$objWidget->name] = $objWidget->label;
+            if ($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$objWidget->name] == '') {
+                $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$objWidget->name] = $objWidget->label;
             }
 
             // Set Correct Label for option fields
             if (is_array($objWidget->options)) {
                 foreach ($objWidget->options as $arrOption) {
                     if ($arrOption['label'] != '') {
-                        $_SESSION['MY_FORM_DATA']['arrLabels'][$arrOption['value']] = $arrOption['label'];
+                        $_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$arrOption['value']] = $arrOption['label'];
                     }
                 }
             }
@@ -221,7 +241,7 @@ class ErntespassForm
 
         // Direktes Aufrufen von formular 2, wenn formular 1 nicht erfolgreich validiert wurde, sollte nicht m�glich sein.
         if ($formId == 'auto_garten-buchen-zusammenfassung') {
-            if ($_SESSION['MY_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] != 'true') {
+            if ($_SESSION['ERNTESPASS_FORM_DATA']['FORMS_PROCESSED']['GARTEN_BUCHEN-BESTELLFORMULAR'] != 'true') {
                 self::redirectToPage(self::$pageAlias1);
             }
         }

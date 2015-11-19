@@ -27,7 +27,7 @@ if(TL_MODE == 'FE'){
     $GLOBALS['ERNTESPASS']['##ERNTESAISON##'] = "2016";
     $GLOBALS['ERNTESPASS']['##SCHUTZNETZ##'] = "Kulturschutznetz (5m x 2,30m) incl. 10 Netzhaltern";
 
-    MCupic\ErntespassForm::$adminEmail = "info@needful-web.de";
+    //MCupic\ErntespassForm::$adminEmail = "info@needful-web.de";
     //MCupic\ErntespassForm::$adminEmail = "m.cupic@gmx.ch";
     //MCupic\ErntespassForm::$adminEmail = "info@erntespass.de";
 
