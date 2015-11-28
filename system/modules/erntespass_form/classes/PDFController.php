@@ -62,32 +62,12 @@ class PDFController extends \System
     {
 
         $arrKeys = array(
-            "anrede",
-            "vorname",
-            "nachname",
-            "strasse",
-            "postleitzahl",
-            "ort",
-            "telefon",
-            "email",
-            "standort",
-            "anfang_geschenkadresse",
-            "anrede_geschenkadresse",
-            "vorname_geschenkadresse",
-            "nachname_geschenkadresse",
-            "strasse_geschenkadresse",
-            "postleitzahl_geschenkadresse",
-            "ort_geschenkadresse",
-            "telefon_geschenkadresse",
-            "e-mail_geschenkadresse",
-            "datum_kontakt_erlaubt_geschenkadresse",
-            "gartengroesse",
-            "gartenname",
-            "anzahl_schutznetze",
-            "anmerkung",
-            "zahlungsart",
-            "agb",
-            "widerrufsbelehrung",
+            'anrede','vorname','nachname','strasse','postleitzahl','ort','telefon','email','standort',
+            'anfang_geschenkadresse','anrede_geschenkadresse','vorname_geschenkadresse','nachname_geschenkadresse','strasse_geschenkadresse','postleitzahl_geschenkadresse','ort_geschenkadresse','telefon_geschenkadresse','e-mail_geschenkadresse','datum_kontakt_erlaubt_geschenkadresse',
+            'anmerkung','zahlungsart',
+            'gartengroesse','gartenname',
+            'anzahl_schutznetze',
+            'agb','widerrufsbelehrung','newsletter'
         );
 
         $a = array();
@@ -228,26 +208,53 @@ class PDFController extends \System
      */
     public function replaceTags($string)
     {
-        //##PRODUKT##
+        // Special handling for option-fields
+        $standort= utf8_encode(htmlentities($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$this->arrFields['standort']]));
+        $gartenname = $this->arrFields['gartenname'];
+        $ort = $this->arrFields['ort'];
+
         if ($this->arrFields['gartengroesse'] == 'gross') {
             $string = str_replace('##PRODUKT##', '##GROSSER_GEMUESEGARTEN##', $string);
-            $preisGarten = $GLOBALS['ERNTESPASS']['##PREIS_GROSSER_GEMUESEGARTEN##'];
-
-        } else {
+            $bruttoGarten = $GLOBALS['ERNTESPASS']['##PREIS_GROSSER_GEMUESEGARTEN##'];
+            $produktAnzahl = 1;
+            $strProdukt = sprintf('%s f&uuml;r die Saison %s in %s <br>Standort: %s <br>Gartenname: %s',
+                $GLOBALS['ERNTESPASS']['##GROSSER_GEMUESEGARTEN##'],
+                $GLOBALS['ERNTESPASS']['##ERNTESAISON##'],
+                $ort,
+                $standort,
+                $gartenname
+            );
+        }
+        elseif($this->arrFields['gartengroesse'] == 'klein') {
             $string = str_replace('##PRODUKT##', '##KLEINER_GEMUESEGARTEN##', $string);
-            $preisGarten = $GLOBALS['ERNTESPASS']['##PREIS_KLEINER_GEMUESEGARTEN##'];
+            $bruttoGarten = $GLOBALS['ERNTESPASS']['##PREIS_KLEINER_GEMUESEGARTEN##'];
+            $produktAnzahl = 1;
+            $strProdukt = sprintf('%s f&uuml;r die Saison %s in %s <br>Standort: %s <br>Gartenname: %s',
+                $GLOBALS['ERNTESPASS']['##KLEINER_GEMUESEGARTEN##'],
+                $GLOBALS['ERNTESPASS']['##ERNTESAISON##'],
+                $ort,
+                $standort,
+                $gartenname
+            );
+        }else{
+            $string = str_replace('##PRODUKT##', '##NUR_SCHUTZNETZ##', $string);
+            $bruttoGarten = 0;
+            $produktAnzahl = 0;
+            $strProdukt = sprintf('%s',
+                $GLOBALS['ERNTESPASS']['##NUR_SCHUTZNETZ##']
+            );
         }
 
+        $string = str_replace('##PRODUKT-ANZAHL##', $produktAnzahl, $string);
+        $string = str_replace('##TEXT-PRODUKT##', $strProdukt, $string);
 
-        $nettoTotal = $this->floatRound(floatval($preisGarten * 100 / (100 + floatval($GLOBALS['ERNTESPASS']['##MWSTSATZ##']))));
-        $string = str_replace('##PREISPRODUKT-NETTO##', $nettoTotal, $string);
+        $nettoGarten = $this->floatRound(floatval($bruttoGarten * 100 / (100 + floatval($GLOBALS['ERNTESPASS']['##MWSTSATZ##']))));
+        $string = str_replace('##PREISPRODUKT-NETTO##', $nettoGarten, $string);
 
-        $string = str_replace('##NETTOBETRAG##', $nettoTotal, $string);
-        $mwstSatz = floatval($GLOBALS['ERNTESPASS']['##MWSTSATZ##']);
-        $mwst = $this->floatRound($nettoTotal / 100 * $mwstSatz);
-        $bruttoTotal = $this->floatRound($preisGarten);
+        $string = str_replace('##GESAMTBETRAG-NETTO##', $nettoGarten, $string);
+        $mwstSatz = $this->floatRound($GLOBALS['ERNTESPASS']['##MWSTSATZ##']);
+        $mwst = $this->floatRound($nettoGarten / 100 * $mwstSatz);
         $string = str_replace('##MWSTBETRAG##', $mwst, $string);
-        $string = str_replace('##GESAMTBETRAG##', $bruttoTotal, $string);
 
         $textGeschenkFuer = '';
         //die(print_r($this->arrFields,true));
@@ -265,21 +272,18 @@ class PDFController extends \System
         // Schutznetze
         $string = str_replace('##SCHUTZNETZ##', $GLOBALS['ERNTESPASS']['##SCHUTZNETZ##'], $string);
         $schutznetzPreisEinzel = $GLOBALS['ERNTESPASS']['##PREIS_SCHUTZNETZ##'] / (100 + $mwstSatz) * 100;
-        $string = str_replace('##SCHUTZNETZ-PREIS-EINZEL##', $this->floatRound($schutznetzPreisEinzel), $string);
+        $string = str_replace('##SCHUTZNETZ-PREIS-NETTO-EINZEL##', $this->floatRound($schutznetzPreisEinzel), $string);
         $schutznetzAnzahl = $this->arrFields['anzahl_schutznetze'];
         $string = str_replace('##SCHUTZNETZ-ANZAHL##', $schutznetzAnzahl, $string);
         $schutznetzPreisGesamt = $schutznetzPreisEinzel * $schutznetzAnzahl;
-        $string = str_replace('##SCHUTZNETZ-PREIS-GESAMT##', $this->floatRound($schutznetzPreisGesamt), $string);
+        $string = str_replace('##SCHUTZNETZ-PREIS-NETTO-GESAMT##', $this->floatRound($schutznetzPreisGesamt), $string);
 
+        $rechungsbetrag = $this->floatRound($bruttoGarten + $GLOBALS['ERNTESPASS']['##PREIS_SCHUTZNETZ##'] * $schutznetzAnzahl);
+        $string = str_replace('##GESAMTBETRAG##', $rechungsbetrag, $string);
 
         $string = str_replace('##DATE##', \Date::parse('d.m.Y'), $string);
         $string = str_replace('##RECHNUNGSNUMMER##', $this->rechnungsnummer, $string);
         $string = str_replace('##ORT##', $this->arrFields['ort'], $string);
-        $string = str_replace('##GARTENNAME##', $this->arrFields['gartenname'], $string);
-
-        // Special handling for option-fields
-        $string = str_replace('##STANDORT##', utf8_encode(htmlentities($_SESSION['ERNTESPASS_FORM_DATA']['arrLabels'][$this->arrFields['standort']])), $string);
-
 
         $string = str_replace('##KUNDENVORNAME##', $this->arrFields['vorname'], $string);
         $string = str_replace('##KUNDENNAME##', $this->arrFields['nachname'], $string);

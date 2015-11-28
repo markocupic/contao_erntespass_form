@@ -5,12 +5,11 @@
 <p></p>
 <p>
     Bankverbindung:<br>
-    Sparkasse xxx<br>
     Kontoinhaber: Erntespa&szlig; Jeanette Lagall<br>
-    Kontonummer: xxx<br>
-    BLZ: xxx<br>
-    IBAN: xxx<br>
-    BIC: xxx<br>
+    Kontonummer: 247015<br>
+    BLZ: 57050120<br>
+    IBAN: DE45 5705 0120 0000 2470 15<br>
+    BIC: MALADE51KOB<br>
     Verwendungszweck: ##RECHNUNGSNUMMER##/##KUNDENVORNAME## ##KUNDENNAME##
 </p>
 <p style="font-weight: bold;">

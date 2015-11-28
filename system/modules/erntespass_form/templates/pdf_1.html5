@@ -1,7 +1,7 @@
 <table>
     <tr>
         <td style="width:110mm;">
-        <h1 style="color:#a3c218 ;">Rechnung</h1>
+        <h1 style="color:#a3c218 ;">Rechnung/Bestellbest&auml;tigung</h1>
         <br>
     </td>
         <td style="width:60mm;">
@@ -28,7 +28,7 @@ Rechnungsnummer: ##RECHNUNGSNUMMER##
 <br>
 <br>
 <br>
-<span style="font-weight: bold;">Rechnung an:</span><br>
+<span style="font-weight: bold;">Rechnungsadresse:</span><br>
 ##KUNDENVORNAME## ##KUNDENNAME##<br>
 ##KUNDENSTRASSE##<br>
 ##KUNDENPLZ## ##KUNDENORT##

@@ -18,14 +18,16 @@ Betrag
     </tr>
     <tr>
         <td style="width:85mm">
-##TEXT-PRODUKT##
+##PRODUKT## f&uuml;r die Saison ##ERNTESAISON## in ##ORT##<br>
+Standort: "##STANDORT##"<br>
+Gartenname: "##GARTENNAME##"
 ##TEXT-GESCHENK-FUER##
         </td>
         <td style="width:30mm; text-align:right;">
 ##PREISPRODUKT-NETTO## &euro;
         </td>
         <td style="width:20mm; text-align:right;">
-##PRODUKT-ANZAHL##
+1
         </td>
         <td style="width:35mm; text-align:right;">
 ##PREISPRODUKT-NETTO## &euro;
@@ -37,16 +39,16 @@ Betrag
 ##SCHUTZNETZ##
         </td>
         <td style="width:30mm; text-align:right;">
-##SCHUTZNETZ-PREIS-NETTO-EINZEL## &euro;
+##SCHUTZNETZ-PREIS-EINZEL## &euro;
         </td>
         <td style="width:20mm; text-align:right;">
 ##SCHUTZNETZ-ANZAHL##
         </td>
         <td style="width:35mm; text-align:right;">
-##SCHUTZNETZ-PREIS-NETTO-GESAMT## &euro;
+##SCHUTZNETZ-PREIS-GESAMT## &euro;
         </td>
     </tr>
-<!--
+
     <tr>
         <td style="width:85mm">
         </td>
@@ -58,11 +60,11 @@ MwSt.-Betrag
         <td style="width:20mm; text-align:right; border-top: 1px solid #000000;">
         </td>
         <td style="width:35mm; text-align:right; border-top: 1px solid #000000;">
-##GESAMTBETRAG-NETTO## &euro;<br>
+##NETTOBETRAG## &euro;<br>
 ##MWSTSATZ##%<br>
 ##MWSTBETRAG## &euro;
         </td>
-    </tr>-->
+    </tr>
     <tr>
         <td style="width:85mm">
         </td>
