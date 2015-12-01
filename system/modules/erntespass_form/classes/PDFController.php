@@ -72,11 +72,11 @@ class PDFController extends \System
 
         $a = array();
         foreach ($arrKeys as $k) {
+            $a[$k] = '';
             if($arrFields[$k] != '')
             {
                 $a[$k] = htmlentities($arrFields[$k]);
             }
-
         }
         $this->arrFields = $a;
 

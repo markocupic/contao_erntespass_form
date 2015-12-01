@@ -4,6 +4,7 @@ if(TL_MODE == 'FE'){
 
     $GLOBALS['TL_CSS'][] = 'system/modules/erntespass_form/assets/fe_erntespass_form.css';
 
+
     // Do yout settings here:
 
     // Fehlende labels
@@ -57,6 +58,9 @@ if(TL_MODE == 'FE'){
     $GLOBALS['TL_HOOKS']['compileFormFields'][] = array('MCupic\ErntespassForm', 'compileFormFields');
 
     $GLOBALS['TL_HOOKS']['initializeSystem'][] = array('MCupic\ErntespassForm', 'initializeSystem');
+
+    //$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/erntespass_form/assets/fe_erntespass_form.js';
+
 }
 
 

@@ -217,10 +217,27 @@ class ErntespassForm
                     }
                 }
             }
+            /**
+            // Disable newsletter if customer only buys a "Schutznetz"
+            if($objWidget->name == 'newsletter' && \Input::post('gartengroesse') == 'nur-netz')
+            {
+                $objWidget->mandatory = false;
+                $objWidget->rgxp = '';
+            }
 
+            // Disable newsletter if customer only buys a "Schutznetz"
+            if($objWidget->name == 'anzahl_schutznetze' && \Input::post('gartengroesse') == 'nur-netz')
+            {
+                if(intval(\Input::post('anzahl_schutznetze')) < 1){
+                    $objWidget->addError('Die Mindestbestellmenge für Schutznetze beträgt: 1.');
+                }
+            }
+             **/
         }
 
         if (self::$currentPageAlias == self::$pageAlias2) {
+            $objWidget->mandatory = false;
+            $objWidget->rgxp = '';
             if ($_SESSION['FORM_DATA']['anfang_geschenkadresse'] == '') {
                 if (strpos($objWidget->name, '_geschenkadresse') !== false) {
                     $objWidget->mandatory = false;
