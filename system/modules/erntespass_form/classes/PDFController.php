@@ -217,10 +217,9 @@ class PDFController extends \System
             $string = str_replace('##PRODUKT##', '##GROSSER_GEMUESEGARTEN##', $string);
             $bruttoGarten = $GLOBALS['ERNTESPASS']['##PREIS_GROSSER_GEMUESEGARTEN##'];
             $produktAnzahl = 1;
-            $strProdukt = sprintf('%s f&uuml;r die Saison %s in %s <br>Standort: %s <br>Gartenname: %s',
+            $strProdukt = sprintf('%s <br>f&uuml;r die Saison %s<br>Standort: %s <br>Gartenname: %s',
                 $GLOBALS['ERNTESPASS']['##GROSSER_GEMUESEGARTEN##'],
                 $GLOBALS['ERNTESPASS']['##ERNTESAISON##'],
-                $ort,
                 $standort,
                 $gartenname
             );
@@ -229,7 +228,7 @@ class PDFController extends \System
             $string = str_replace('##PRODUKT##', '##KLEINER_GEMUESEGARTEN##', $string);
             $bruttoGarten = $GLOBALS['ERNTESPASS']['##PREIS_KLEINER_GEMUESEGARTEN##'];
             $produktAnzahl = 1;
-            $strProdukt = sprintf('%s f&uuml;r die Saison %s in %s <br>Standort: %s <br>Gartenname: %s',
+            $strProdukt = sprintf('%s <br>f&uuml;r die Saison %s<br>Standort: %s <br>Gartenname: %s',
                 $GLOBALS['ERNTESPASS']['##KLEINER_GEMUESEGARTEN##'],
                 $GLOBALS['ERNTESPASS']['##ERNTESAISON##'],
                 $ort,

@@ -112,7 +112,9 @@ function floatRound($value){
         </tr>
 
     </table>
-
+    <div class="anmerkung-ust">
+    <p>Alle angegebenen Preise sind Endpreise. Aufgrund des Kleinunternehmerstatus gem. &sect; 19 UStG wird keine Umsatzsteuer erhoben und daher auch nicht ausgewiesen.</p>
+    </div>
     <a href="index.php/garten-buchen-bestellformular.html">Bestellung bearbeiten</a>
 </div>
 
